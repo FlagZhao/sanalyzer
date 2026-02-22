@@ -51,7 +51,9 @@ void HeatmapAnalysis::kernel_start_callback(std::shared_ptr<KernelLaunch_t> kern
 void HeatmapAnalysis::kernel_trace_flush(std::shared_ptr<KernelLaunch_t> kernel) {
     std::string filename = output_directory + "/kernel_"
                             + std::to_string(kernel->kernel_id) + ".csv";
-    printf("Dumping block 0 heatmap to %s\n", filename.c_str());
+    const char* target_block_str = std::getenv("YOSEMITE_TARGET_BLOCK");
+    printf("Dumping heatmap for block (%s) to %s\n",
+           target_block_str ? target_block_str : "0,0,0", filename.c_str());
 
     std::ofstream out(filename);
     std::stringstream ss;
